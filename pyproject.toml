@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eyeye_ful"
+version = "0.2.1"
+authors = [
+  { name="gbjilbgu" },
+]
+description = "A random module that is kinda weird"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy>=1.20.0",
+    "matplotlib",
+]
+#]"scipy>=1.15.0"
+#]
