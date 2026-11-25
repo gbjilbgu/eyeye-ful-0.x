@@ -66,6 +66,8 @@ def activa(x,func="sigmoid",c=0):
     elif func == "softmax":
         x=np.clip(x,-500,500)
         return np.exp(x)/(c)
+    elif func == "const":
+        return x
     elif func == "yo mama":
         raise EyeyeLovesYourMom("Thanks for bringing me to your mother :))))")
 
@@ -197,7 +199,7 @@ At least it has its job, not like someone, jobless :)))))"""
             inp = float(input("Type the input " + str(i) + " : "))
             self.a[i] = inp
 
-    def calculate_output(self,outfunc="sigmoid",zs=0):
+    def calculate_output(self,outfunc="sigmoid",hidfunc="sigmoid",ra=1):
         """This alpha male rizzy skibidi dop dop yes yes function here run the neural network
     First you have to type the input, you can either inject directly to the 'a' or use read_input() to manually type this
     And yeah, to access the output, there is no way except...acess the 'a'
@@ -226,16 +228,17 @@ At least it has its job, not like someone, jobless :)))))"""
             daw = np.array(daw,dtype=np.float32)"""
             dab = np.array(self.b[self.markb[i]+1:self.markb[i]+1+self.nonel[i+1]],dtype = np.float32)
             if i != self.N-1:
-                self.a[self.mark[i+1]+1:self.mark[i+1]+1+self.nonel[i+1]] = list(activa(daw@daa+dab))
+                self.a[self.mark[i+1]+1:self.mark[i+1]+1+self.nonel[i+1]] = list(activa(daw@daa+dab,func=hidfunc))
             else:
                 if outfunc == "softmax":
                     oi = daw@daa+dab
                     ay = sum(e**(oi))
                     self.a[self.mark[i+1]+1:self.mark[i+1]+1+self.nonel[i+1]] = list(activa(oi,func="softmax",c=ay))
-                elif zs==1:
-                    oi = daw@daa+dab
-                    self.a[self.mark[i+1]+1:self.mark[i+1]+1+self.nonel[i+1]] = list(activa(daw@daa+dab))
-        if outfunc == "softmax" or zs==1:
+                    oi = self.a[self.mark[-1]+1:]
+                else:
+                    oi = activa(daw@daa+dab,func=outfunc)
+                    self.a[self.mark[i+1]+1:self.mark[i+1]+1+self.nonel[i+1]] = list(activa(daw@daa+dab,func=outfunc))
+        if ra==1:
             return list(oi)
         """for i in range(1, self.N):
             for i2 in range(1, self.nonel[i+1]+1):
@@ -396,7 +399,7 @@ I only need that... if I have that... my life will never be happier than this da
                     self.b[indexa] -= k*y
                     indexa += 1"""
         else:
-            k = delta(sqrt(sum(np.array(di[0])**2)+sum(np.array(di[1])**2)))
+            k = delta(sqrt(sum(np.array(di[0])**2)+sum(np.array(di[1])**2)),M=Md,R=Rd)
             self.w = list(np.array(self.w) - k*np.array(di[0]))
             self.b = list(np.array(self.b) - k*np.array(di[1]))
         if mode == 1:
